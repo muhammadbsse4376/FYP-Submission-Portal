@@ -104,6 +104,11 @@ def create_app():
         except Exception as e:
             return {"error": str(e)}, 500
 
+    @app.route("/health")
+    def health_check():
+        """Health check endpoint for Fly.io monitoring"""
+        return {"status": "healthy", "service": "FYP Portal Backend"}, 200
+
     return app
 
 

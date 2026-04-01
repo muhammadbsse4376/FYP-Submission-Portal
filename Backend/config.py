@@ -10,17 +10,21 @@ except Exception:
 
 class Config:
 
-    # Flask secret key
-    SECRET_KEY = "fyp_secret_key_change_in_production"
+    # Flask secret key (use environment variable in production)
+    SECRET_KEY = os.getenv("SECRET_KEY", "fyp_secret_key_change_in_production")
 
-    # Flask-JWT-Extended uses this key
-    JWT_SECRET_KEY = "jwt_fyp_secret_change_in_production"
+    # Flask-JWT-Extended uses this key (use environment variable in production)
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "jwt_fyp_secret_change_in_production")
 
     # Token stays valid for 24 hours so students don't get logged out mid-session
-    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=24)
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES", 24)))
 
-    # SQLAlchemy database URI — uses PyMySQL driver
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:StrongPass123!@localhost/fyp_portal"
+    # SQLAlchemy database URI — use DATABASE_URL env var for production (PostgreSQL recommended)
+    # Falls back to local MySQL for development
+    SQLALCHEMY_DATABASE_URI = os.getenv(
+        "DATABASE_URL",
+        "mysql+pymysql://root:StrongPass123!@localhost/fyp_portal"
+    )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Flask-Mail — Gmail SMTP

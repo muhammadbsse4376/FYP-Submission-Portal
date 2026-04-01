@@ -1,0 +1,44 @@
+# Fly.io Configuration
+app = "fyp-portal-backend"
+primary_region = "lax"  # Los Angeles (adjust based on your region)
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  FLASK_ENV = "production"
+  PYTHONUNBUFFERED = "1"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 8080
+  processes = ["app"]
+
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 100
+    soft_limit = 80
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+
+  [services.http_checks]
+    enabled = true
+    grace_period = "10s"
+    interval = "15s"
+    timeout = "5s"
+    method = "GET"
+    path = "/health"
+
+# Autoscaling configuration (optional)
+[processes]
+  app = "gunicorn --bind 0.0.0.0:8080 --timeout 120 --workers 2 app:create_app()"
+
+# Environments - use fly secrets set to configure
+[[env]]
+  name = "production"
