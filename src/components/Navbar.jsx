@@ -1,0 +1,36 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { LogOut } from "lucide-react";
+
+const Navbar = ({ userName, userRole = "Student" }) => {
+    const navigate = useNavigate();
+
+    return (
+        <nav className="bg-white shadow-sm border-b border-gray-200 px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+            {/* Left: Title */}
+            <div className="text-center md:text-left mb-2 md:mb-0">
+                <h1 className="text-xl font-bold text-gray-800">FYP Portal</h1>
+                <p className="text-sm text-gray-500">Student Dashboard</p>
+            </div>
+
+            {/* Right: Welcome + Logout */}
+            <div className="flex items-center gap-4">
+                <span className="text-gray-700 font-medium text-sm">
+                    Welcome, {userName}!
+                </span>
+
+                <button
+                    onClick={() => navigate("/")}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300
+               text-gray-700 hover:bg-red-50 hover:text-gray-800
+               transition-colors duration-200 text-sm"
+                >
+                    <LogOut className="h-4 w-4" />
+                    Logout
+                </button>
+            </div>
+        </nav>
+    );
+};
+
+export default Navbar;
