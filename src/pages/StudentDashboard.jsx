@@ -70,47 +70,47 @@ export default function StudentDashboard() {
     }
 
     return (
-        <div className="flex flex-col space-y-8">
+        <div className="flex flex-col space-y-6 sm:space-y-8">
 
             {/* Quick Action Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <Link to="/student/CreateGroup">
-                    <div className="bg-white shadow rounded-xl p-5 border border-gray-300 hover:shadow-lg hover:bg-gray-200 transition cursor-pointer text-gray-700">
+                    <div className="bg-white shadow-sm rounded-xl p-5 border border-gray-300 hover:shadow-lg hover:border-teal-200 transition cursor-pointer text-gray-700 h-full">
                         <div className="flex items-center justify-between mb-2">
-                            <h3 className="font-sans text-gray-700 font-bold text-sm">Create Group</h3>
+                            <h3 className="font-sans text-gray-800 font-bold text-sm">Create Group</h3>
                             <Plus className="h-5 w-5" />
                         </div>
-                        <p className="text-gray-700 text-xs">Start a new project group</p>
+                        <p className="text-gray-600 text-xs">Start a new project group</p>
                     </div>
                 </Link>
 
                 <Link to="/student/SelectGroup">
-                    <div className="bg-white shadow rounded-xl p-5 border border-gray-300 hover:shadow-lg hover:bg-gray-200 transition cursor-pointer text-gray-700">
+                    <div className="bg-white shadow-sm rounded-xl p-5 border border-gray-300 hover:shadow-lg hover:border-teal-200 transition cursor-pointer text-gray-700 h-full">
                         <div className="flex items-center justify-between mb-2">
-                            <h3 className="font-sans text-gray-700 font-bold text-sm">Select Group</h3>
+                            <h3 className="font-sans text-gray-800 font-bold text-sm">Select Group</h3>
                             <Search className="h-5 w-5" />
                         </div>
-                        <p className="text-gray-700 text-xs">Join an existing group</p>
+                        <p className="text-gray-600 text-xs">Join an existing group</p>
                     </div>
                 </Link>
 
                 <Link to="/student/Project">
-                    <div className="bg-white shadow rounded-xl p-5 border border-gray-300 hover:shadow-lg hover:bg-gray-200 transition cursor-pointer text-gray-700">
+                    <div className="bg-white shadow-sm rounded-xl p-5 border border-gray-300 hover:shadow-lg hover:border-teal-200 transition cursor-pointer text-gray-700 h-full">
                         <div className="flex items-center justify-between mb-2">
-                            <h3 className="font-sans text-gray-700 font-bold text-sm">Browse Projects</h3>
+                            <h3 className="font-sans text-gray-800 font-bold text-sm">Browse Projects</h3>
                             <FolderOpen className="h-5 w-5" />
                         </div>
-                        <p className="text-gray-700 text-xs">View all available projects</p>
+                        <p className="text-gray-600 text-xs">View all available projects</p>
                     </div>
                 </Link>
 
                 <Link to="/student/Supervisors">
-                    <div className="bg-white shadow rounded-xl p-5 border border-gray-300 hover:shadow-lg hover:bg-gray-200 transition cursor-pointer text-gray-700">
+                    <div className="bg-white shadow-sm rounded-xl p-5 border border-gray-300 hover:shadow-lg hover:border-teal-200 transition cursor-pointer text-gray-700 h-full">
                         <div className="flex items-center justify-between mb-2">
-                            <h3 className="font-sans text-gray-700 font-bold text-sm">Supervisors</h3>
+                            <h3 className="font-sans text-gray-800 font-bold text-sm">Supervisors</h3>
                             <UserCheck className="h-5 w-5" />
                         </div>
-                        <p className="text-gray-700 text-xs">Find project supervisors</p>
+                        <p className="text-gray-600 text-xs">Find project supervisors</p>
                     </div>
                 </Link>
             </div>
@@ -119,9 +119,9 @@ export default function StudentDashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                 {/* My Group */}
-                <div className="bg-white shadow rounded-xl p-5 border border-gray-300 hover:shadow-lg hover:bg-gray-200 transition">
+                <div className="bg-white shadow-sm rounded-xl p-5 border border-gray-300 hover:shadow-lg hover:border-teal-200 transition h-full">
                     <div className="flex items-center gap-2 mb-3">
-                        <Users className="h-5 w-5 text-gray-700" /> <h3 className="font-sans text-gray-700 font-bold text-sm">My Group</h3>
+                        <Users className="h-5 w-5 text-gray-700" /> <h3 className="font-sans text-gray-800 font-bold text-sm">My Group</h3>
                     </div>
                     {myGroup ? (
                         <div className="space-y-3 text-gray-700">
@@ -145,9 +145,9 @@ export default function StudentDashboard() {
                 </div>
 
                 {/* Current Project */}
-                <div className="bg-white shadow rounded-xl p-5 border border-gray-300 hover:shadow-lg hover:bg-gray-200 transition text-gray-700">
+                <div className="bg-white shadow-sm rounded-xl p-5 border border-gray-300 hover:shadow-lg hover:border-teal-200 transition text-gray-700 h-full">
                     <div className="flex items-center gap-2 mb-3">
-                        <FolderOpen className="h-5 w-5" /> <h3 className="font-sans text-gray-700 font-bold text-sm">Current Project</h3>
+                        <FolderOpen className="h-5 w-5" /> <h3 className="font-sans text-gray-800 font-bold text-sm">Current Project</h3>
                     </div>
                     {myProject ? (
                         <div className="space-y-3">
@@ -178,9 +178,9 @@ export default function StudentDashboard() {
                 </div>
 
                 {/* Supervisor */}
-                <div className="bg-white shadow rounded-xl p-5 border border-gray-300 hover:shadow-lg hover:bg-gray-200 transition text-gray-700">
+                <div className="bg-white shadow-sm rounded-xl p-5 border border-gray-300 hover:shadow-lg hover:border-teal-200 transition text-gray-700 h-full">
                     <div className="flex items-center gap-2 mb-3">
-                        <UserCheck className="h-5 w-5" /> <h3 className="font-sans text-gray-700 font-bold text-sm">My Supervisor</h3>
+                        <UserCheck className="h-5 w-5" /> <h3 className="font-sans text-gray-800 font-bold text-sm">My Supervisor</h3>
                     </div>
                     {myProject && myProject.supervisor_name ? (
                         <div className="space-y-3">
@@ -209,21 +209,21 @@ export default function StudentDashboard() {
             </div>
 
             {/* Group Requests */}
-            <div className="bg-white shadow rounded-xl p-5 border border-gray-300 hofont-sans text-gray-700 font-bold text-smver:shadow-lg hover:bg-gray-200 transition">
+            <div className="bg-white shadow-sm rounded-xl p-5 border border-gray-300 hover:shadow-lg hover:border-teal-200 transition">
                 <div className="flex items-center gap-2 mb-4">
                     <Users className="h-5 w-5" />
-                    <h3 className="font-sans font-bold text-lg">Group Requests</h3>
+                    <h3 className="font-sans font-bold text-lg text-gray-800">Group Requests</h3>
                 </div>
                 {groupRequests.length > 0 ? (
                     <div className="space-y-3 text-gray-700">
                         {groupRequests.map(request => (
-                            <div key={request.id} className="flex justify-between items-center border-b py-3">
+                            <div key={request.id} className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center border-b py-3">
                                 <div>
                                     <p className="font-medium">{request.user_name || "Unknown Student"}</p>
                                     <p className="text-xs">Requested to join your group</p>
                                     {request.message && <p className="text-xs text-gray-500 italic mt-1">"{request.message}"</p>}
                                 </div>
-                                <div className="flex gap-2">
+                                <div className="flex flex-wrap gap-2 sm:justify-end">
                                     {request.status === "pending" ? (
                                         <>
                                             <button onClick={() => handleAcceptRequest(request.id)}

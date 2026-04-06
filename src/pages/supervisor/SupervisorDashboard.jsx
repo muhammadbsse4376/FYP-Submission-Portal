@@ -65,19 +65,18 @@ export default function SupervisorDashboard() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-slate-100 p-6 space-y-8">
+        <div className="min-h-screen bg-slate-100 p-4 sm:p-6 lg:p-8 space-y-6 sm:space-y-8">
 
             {/* ================= Dashboard Main Wrapper ================= */}
             <div className="space-y-6">
 
                 {/* ================= Stats (1 Row Equal Size) ================= */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                     {stats.map((stat, index) => (
                         <div
                             key={index}
                             onClick={() => navigate(stat.link)}
-                            className="bg-white border border-gray-300 rounded-xl shadow 
-                p-6 cursor-pointer hover:bg-gray-200 hover:shadow-lg transition"
+                            className="bg-white border border-gray-300 rounded-xl shadow-sm p-6 cursor-pointer hover:shadow-lg hover:border-teal-200 transition h-full"
                         >
                             <div className="flex items-center justify-between mb-4">
                                 <stat.icon className="w-6 h-6 text-teal-700" />
@@ -89,7 +88,7 @@ export default function SupervisorDashboard() {
                 </div>
 
                 {/* ================= Project Status Overview ================= */}
-                <div className="">
+                <div>
                     <h2 className="text-lg font-semibold text-gray-700 mb-4">
                         Project Status Overview
                     </h2>
@@ -101,7 +100,7 @@ export default function SupervisorDashboard() {
             </div>
 
             {/* ================= Meetings ================= */}
-            <div className="bg-white border border-gray-300 rounded-xl shadow p-6">
+            <div className="bg-white border border-gray-300 rounded-xl shadow-sm p-6">
                 <h2 className="text-lg font-semibold text-gray-700 mb-4">
                     Meetings
                 </h2>
@@ -109,7 +108,7 @@ export default function SupervisorDashboard() {
             </div>
 
             {/* ================= My Projects ================= */}
-            <div className="bg-white border border-gray-300 rounded-xl shadow p-6">
+            <div className="bg-white border border-gray-300 rounded-xl shadow-sm p-6">
                 <h2 className="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
                     <FolderOpen className="w-5 h-5 text-teal-700" />
                     My Projects
@@ -121,7 +120,7 @@ export default function SupervisorDashboard() {
                     ) : supervisedProjects.map((project, index) => (
                         <div
                             key={index}
-                            className="border border-gray-300 rounded-lg p-4 hover:bg-gray-200 transition"
+                            className="border border-gray-300 rounded-lg p-4 hover:border-teal-200 hover:shadow-sm transition"
                         >
                             <div className="flex justify-between mb-2">
                                 <div>
@@ -153,7 +152,7 @@ export default function SupervisorDashboard() {
             </div>
 
             {/* ================= Recent Activities ================= */}
-            <div className="bg-white border border-gray-300 rounded-xl shadow p-6">
+            <div className="bg-white border border-gray-300 rounded-xl shadow-sm p-6">
                 <h2 className="text-lg font-semibold text-gray-700 mb-4">
                     Recent Activities
                 </h2>

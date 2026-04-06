@@ -28,7 +28,7 @@ const Login = () => {
         return () => clearTimeout(timer);
     }, []);
 
-    const handleSubmit = async (e) => { 
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
 
@@ -72,90 +72,129 @@ const Login = () => {
 
     if (showSplash) {
         return (
-            <div className="flex items-center justify-center min-h-screen bg-slate-100">
-                <h1 className="text-3xl font-serif tracking-wide text-gray-700">
-                    Welcome to FYP Portal
-                </h1>
+            <div className="min-h-screen bg-slate-100 flex items-center justify-center px-6">
+                <div className="text-center text-gray-700">
+                    <img src={Logo} alt="IIUI Logo" className="w-24 mx-auto mb-5" />
+                    <h1 className="text-3xl md:text-4xl font-serif tracking-wide">FYP Portal</h1>
+                    <p className="mt-2 text-gray-600 text-sm md:text-base">
+                        International Islamic University Islamabad
+                    </p>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-slate-100 flex flex-col items-center pt-6 px-4 font-sans">
-            <div className="text-center mb-8">
-                <h1 className="text-3xl font-sans text-gray-700 tracking-wide">FYP Portal</h1>
-                <img src={Logo} alt="IIUI Logo" className="w-20 mx-auto my-4" />
-                <p className="font-serif text-base text-gray-700">
-                    Department of Software Engineering
-                    <br />
-                    International Islamic University Islamabad
-                </p>
-            </div>
+        <div className="min-h-screen relative overflow-hidden bg-slate-100 px-4 py-8 md:px-8 lg:px-12">
+            <div className="pointer-events-none absolute -top-28 -left-28 h-72 w-72 rounded-full bg-teal-200/35 blur-3xl" />
+            <div className="pointer-events-none absolute bottom-0 right-0 h-80 w-80 rounded-full bg-emerald-100/35 blur-3xl" />
 
-            <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md border border-slate-200">
-                <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="relative mx-auto grid w-full max-w-6xl items-stretch overflow-hidden rounded-3xl border border-gray-300 bg-white shadow-2xl shadow-slate-900/10 md:grid-cols-2">
+                <section className="bg-gray-50 p-8 text-gray-700 md:p-12 flex flex-col justify-between border-r border-gray-200">
                     <div>
-                        <p className="text-base font-semibold text-center mb-3 text-gray-700">Select Role</p>
-                        <div className="flex justify-center gap-3">
-                            {["student", "admin", "supervisor"].map((r) => (
-                                <button
-                                    key={r}
-                                    type="button"
-                                    onClick={() => setRole(r)}
-                                    className={`px-4 py-2 text-sm rounded-lg border transition-all duration-200 ${role === r
-                                        ? "bg-teal-700 text-white border-teal-700 shadow"
-                                        : "bg-slate-200 text-slate-700 border-slate-300 hover:bg-slate-300"
-                                        }`}
-                                >
-                                    {r.charAt(0).toUpperCase() + r.slice(1)}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div>
-                        <label className="block text-sm mb-1 font-medium text-gray-700">Email</label>
-                        <input
-                            type="email"
-                            name="email"
-                            autoComplete="email"
-                            className="w-full border border-slate-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600 transition"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block text-sm mb-1 font-medium text-gray-700">Password</label>
-                        <input
-                            type="password"
-                            name="password"
-                            autoComplete="current-password"
-                            className="w-full border border-slate-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600 transition"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </div>
-
-                    {error && <p className="text-red-600 text-sm text-center -mt-1">{error}</p>}
-
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full bg-teal-700 text-white py-3 text-sm rounded-lg font-semibold hover:bg-teal-600 transition-all duration-200 shadow-md disabled:opacity-60"
-                    >
-                        {loading ? "Logging in..." : "Login"}
-                    </button>
-
-                    {role === "student" && (
-                        <p className="text-center text-sm text-gray-500">
-                            Don't have an account?{" "}
-                            <button type="button" onClick={() => navigate("/register")} className="text-teal-700 font-semibold hover:underline">
-                                Register here
-                            </button>
+                        <img src={Logo} alt="IIUI Logo" className="w-16 md:w-20" />
+                        <p className="mt-6 text-xs uppercase tracking-[0.28em] text-teal-700">
+                            Final Year Project Submission Portal
                         </p>
-                    )}
-                </form>
+                        <h1 className="mt-3 font-serif text-3xl md:text-4xl leading-tight">
+                            International Islamic University Islamabad
+                        </h1>
+                        <p className="mt-4 max-w-md text-sm md:text-base text-gray-600 leading-relaxed">
+                            Department of Software Engineering. Secure and centralized access for students, supervisors, and administrators.
+                        </p>
+                    </div>
+
+                    <div className="mt-10 rounded-2xl border border-teal-200 bg-teal-50 p-4">
+                        <p className="text-sm text-gray-700 leading-relaxed">
+                            Please use your institutional credentials to continue.
+                        </p>
+                    </div>
+                </section>
+
+                <section className="p-6 sm:p-8 md:p-10 lg:p-12">
+                    <div className="mb-7">
+                        <h2 className="font-serif text-2xl md:text-3xl text-slate-900">Login</h2>
+                        <p className="mt-2 text-sm text-slate-600">
+                            Access your portal account and continue your FYP workflow.
+                        </p>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        <div>
+                            <p className="text-sm font-semibold text-slate-700 mb-3">Select role</p>
+                            <div className="grid grid-cols-3 gap-2">
+                                {["student", "admin", "supervisor"].map((r) => (
+                                    <button
+                                        key={r}
+                                        type="button"
+                                        onClick={() => setRole(r)}
+                                        className={`px-3 py-2 text-sm rounded-xl border transition-all duration-200 ${role === r
+                                            ? "bg-teal-100 text-teal-700 border-teal-300 shadow"
+                                            : "bg-white text-gray-700 border-gray-300 hover:border-teal-300 hover:bg-teal-50"
+                                            }`}
+                                    >
+                                        {r.charAt(0).toUpperCase() + r.slice(1)}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div>
+                            <label htmlFor="email" className="block text-sm mb-1.5 font-medium text-slate-700">
+                                Email
+                            </label>
+                            <input
+                                id="email"
+                                type="email"
+                                name="email"
+                                autoComplete="email"
+                                className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-teal-400 transition"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="you@iiu.edu.pk"
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="password" className="block text-sm mb-1.5 font-medium text-slate-700">
+                                Password
+                            </label>
+                            <input
+                                id="password"
+                                type="password"
+                                name="password"
+                                autoComplete="current-password"
+                                className="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-teal-400 transition"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Enter your password"
+                            />
+                        </div>
+
+                        {error && <p className="text-red-600 text-sm text-center -mt-1">{error}</p>}
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full rounded-xl bg-teal-600 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-teal-500 disabled:opacity-60"
+                        >
+                            {loading ? "Logging in..." : "Login"}
+                        </button>
+
+                        {role === "student" && (
+                            <p className="text-center text-sm text-slate-500">
+                                Don&apos;t have an account?{" "}
+                                <button
+                                    type="button"
+                                    onClick={() => navigate("/register")}
+                                    className="font-semibold text-teal-700 hover:text-teal-600 hover:underline"
+                                >
+                                    Register here
+                                </button>
+                            </p>
+                        )}
+                    </form>
+                </section>
             </div>
         </div>
     );

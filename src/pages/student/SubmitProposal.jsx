@@ -15,12 +15,19 @@ const SubmitProposal = () => {
 
     const [file, setFile] = useState(null);
     const [supervisors, setSupervisors] = useState([]);
+    const [proposal, setProposal] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
     useEffect(() => {
-        API.get("/project/supervisors")
-            .then(res => setSupervisors(res.data.supervisors || []))
+        Promise.all([
+            API.get("/project/supervisors"),
+            API.get("/project/my-proposal"),
+        ])
+            .then(([supRes, proposalRes]) => {
+                setSupervisors(supRes.data.supervisors || []);
+                setProposal(proposalRes.data.proposal || null);
+            })
             .catch(() => { });
     }, []);
 
@@ -53,6 +60,38 @@ const SubmitProposal = () => {
             setFile(e.target.files[0]);
         }
     };
+
+    if (proposal?.status === "approved") {
+        return (
+            <div className="p-6 bg-slate-100 min-h-screen space-y-6">
+                <div className="border-b pb-4">
+                    <h1 className="text-2xl font-bold text-gray-700">Submit Proposal</h1>
+                    <p className="text-sm text-gray-600">
+                        Submit your final year project proposal for approval
+                    </p>
+                </div>
+
+                <div className="bg-white rounded-xl shadow border border-gray-300 p-8 text-center">
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-teal-100 flex items-center justify-center">
+                        <svg className="w-8 h-8 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-800">Proposal Accepted</h2>
+                    <p className="text-gray-600 mt-2 max-w-2xl mx-auto">
+                        Your proposal has been accepted by your supervisor. You can continue tracking your project progress from the progress section.
+                    </p>
+                    <button
+                        type="button"
+                        onClick={() => navigate("/student/TrackProgress")}
+                        className="mt-6 px-6 py-3 bg-teal-600 text-white rounded-xl font-semibold hover:bg-teal-500 transition"
+                    >
+                        View Progress
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="p-6 bg-slate-100 min-h-screen space-y-6">
@@ -193,7 +232,7 @@ const SubmitProposal = () => {
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                             Upload Proposal Document <span className="text-red-500">*</span>
                         </label>
-                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50">
+                        <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 bg-gray-50 transition hover:border-teal-400 hover:bg-teal-50/50">
                             <input
                                 type="file"
                                 onChange={handleFileChange}
@@ -216,8 +255,8 @@ const SubmitProposal = () => {
                             </label>
 
                             {file && (
-                                <div className="mt-4 flex items-center gap-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                                    <FileText className="w-5 h-5 text-blue-600" />
+                                <div className="mt-4 flex items-center gap-2 p-3 bg-teal-50 border border-teal-200 rounded-lg">
+                                    <FileText className="w-5 h-5 text-teal-600" />
                                     <span className="text-sm text-gray-700">{file.name}</span>
                                 </div>
                             )}

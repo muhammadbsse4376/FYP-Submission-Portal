@@ -17,14 +17,14 @@ export default function ProtectedRoute({ allowedRoles = [] }) {
         localStorage.getItem("access_token") || localStorage.getItem("token");
 
     if (!token) {
-        return <Navigate to="/" replace state={{ from: location }} />;
+        return <Navigate to="/login" replace state={{ from: location }} />;
     }
 
     const payload = decodeJwt(token);
     const role = (localStorage.getItem("role") || payload?.role || "").toLowerCase();
 
     if (allowedRoles.length && !allowedRoles.map(r => r.toLowerCase()).includes(role)) {
-        return <Navigate to="/" replace />;
+        return <Navigate to="/login" replace />;
     }
 
     return <Outlet />;

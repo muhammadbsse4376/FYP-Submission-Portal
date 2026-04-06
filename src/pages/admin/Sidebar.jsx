@@ -34,12 +34,12 @@ export default function Sidebar({ open, onClose }) {
             )}
 
             <aside
-                className={`fixed md:static z-50 top-0 left-0 h-screen w-64 bg-slate-800 shadow-md overflow-y-auto p-4
+                className={`fixed md:fixed z-50 inset-y-0 left-0 h-screen w-64 bg-slate-800 shadow-md overflow-hidden p-4
                     transform transition-transform duration-300
                     ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
             >
                 {/* Brand */}
-                <div className="flex justify-between items-center mb-6">
+                <div className="flex justify-between items-center mb-6 shrink-0">
                     <div>
                         <h1 className="text-xl font-bold text-white">FYP Portal</h1>
                         <p className="text-xs text-gray-400">Admin Panel</p>

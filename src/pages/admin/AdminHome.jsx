@@ -62,7 +62,7 @@ export default function AdminHome() {
     }, []);
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
 
             {/* <div>
                 <h1 className="text-2xl font-bold text-gray-700">
@@ -74,11 +74,11 @@ export default function AdminHome() {
             </div> */}
 
             {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
                 {stats.map((stat, index) => (
                     <div key={index}
                         onClick={() => navigate(stat.link)}
-                        className="bg-white shadow rounded-xl p-6 border border-gray-300 hover:shadow-lg hover:bg-gray-200 transition text-gray-700">
+                        className="bg-white shadow-sm rounded-xl p-6 border border-gray-300 hover:shadow-lg hover:border-teal-200 transition text-gray-700 h-full">
 
                         <div className="flex justify-between mb-4">
                             <stat.icon className="w-6 h-6 text-gray-700" />
@@ -96,7 +96,7 @@ export default function AdminHome() {
             {/* Charts */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-                <div className="bg-white shadow rounded-xl p-6 border border-gray-300 hover:shadow-lg transition overflow-hidden">
+                <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-300 hover:shadow-lg hover:border-teal-200 transition overflow-hidden">
                     <h2 className="text-lg font-semibold mb-4 text-gray-700">
                         Project Status Distribution
                     </h2>
@@ -106,20 +106,19 @@ export default function AdminHome() {
                                 data={projectStatusData}
                                 dataKey="value"
                                 outerRadius={100}
-                                label={({ name, percent }) =>
-                                    `${name} ${(percent * 100).toFixed(0)}%`
-                                }
+                                labelLine={false}
                             >
                                 {projectStatusData.map((entry, index) => (
                                     <Cell key={index} fill={entry.color} />
                                 ))}
                             </Pie>
                             <Tooltip />
+                            <Legend />
                         </PieChart>
                     </ResponsiveContainer>
                 </div>
 
-                <div className="bg-white shadow rounded-xl p-6 border border-gray-300 hover:shadow-lg transition overflow-hidden">
+                <div className="bg-white shadow-sm rounded-xl p-6 border border-gray-300 hover:shadow-lg hover:border-teal-200 transition overflow-hidden">
                     <h2 className="text-lg font-semibold mb-4 text-gray-700">
                         Portal Overview
                     </h2>

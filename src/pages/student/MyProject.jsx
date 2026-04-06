@@ -69,8 +69,6 @@ export default function MyProject() {
 
     const technologies = displayData.technologies ? displayData.technologies.split(",").map(t => t.trim()) : [];
     const status = project ? "Approved" : proposal?.status === "pending" ? "Pending Approval" : proposal?.status === "rejected" ? "Rejected" : displayData.status;
-    const documents = [];
-
     return (
         <div className="p-6 space-y-6">
 
@@ -190,42 +188,6 @@ export default function MyProject() {
                             </button>
                         </div>
                     )}
-                </div>
-            </div>
-
-            {/* Documents Section */}
-            <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition">
-
-                <div className="flex justify-between items-center mb-5 border-b pb-3">
-                    <h2 className="text-xl font-semibold text-gray-700">
-                        Project Documents
-                    </h2>
-
-                    <button className="w-40 bg-teal-700 text-white py-3 text-sm rounded-lg font-semibold hover:bg-teal-600 transition-all duration-200 shadow-md">
-                        Upload Document
-                    </button>
-                </div>
-
-                <div className="space-y-4">
-                    {documents.map((doc, index) => (
-                        <div
-                            key={index}
-                            className="flex justify-between items-center p-4 border border-gray-200 rounded-md hover:bg-gray-50 transition"
-                        >
-                            <div>
-                                <p className="font-medium text-gray-800">
-                                    {doc.name}
-                                </p>
-                                <p className="text-sm text-gray-500 mt-1">
-                                    Uploaded on {doc.uploadDate} • {doc.size}
-                                </p>
-                            </div>
-
-                            <button className="px-4 py-1 bg-green-100 text-gray-700 text-sm font-semibold  border-gray-200 rounded-md hover:bg-teal-200  ">
-                                Download
-                            </button>
-                        </div>
-                    ))}
                 </div>
             </div>
 

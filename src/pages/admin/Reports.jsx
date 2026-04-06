@@ -134,7 +134,7 @@ export default function Reports() {
                     </h2>
                     <ResponsiveContainer width="100%" height={280}>
                         <PieChart>
-                            <Pie data={projectStatusData} dataKey="value" outerRadius={100} label>
+                            <Pie data={projectStatusData} dataKey="value" outerRadius={100} labelLine={false}>
                                 {projectStatusData.map((entry, index) => (
                                     <Cell key={index} fill={entry.color} />
                                 ))}

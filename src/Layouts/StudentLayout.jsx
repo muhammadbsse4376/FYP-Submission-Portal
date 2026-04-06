@@ -10,18 +10,18 @@ const StudentLayout = () => {
     const userName = localStorage.getItem("name") || "Student";
 
     return (
-        <div className="flex h-screen bg-slate-100 dark:bg-slate-900">
+        <div className="min-h-screen bg-slate-100 dark:bg-slate-900">
 
             {/* Sidebar always visible */}
             <Sidebar />
 
             {/* Main content */}
-            <div className="flex-1 min-w-0 flex flex-col h-screen">
+            <div className="min-h-screen flex flex-col md:ml-64">
 
                 {/* Navbar only on dashboard — OUTSIDE scrollable main */}
                 {isDashboard && <Navbar userRole="" userName={userName} />}
 
-                <main className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden p-6">
+                <main className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden p-4 sm:p-6 lg:p-8">
                     <Outlet />
                 </main>
 

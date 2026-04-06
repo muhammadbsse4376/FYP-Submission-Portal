@@ -129,19 +129,19 @@ export default function PastProjects() {
                                 <label className="block text-sm text-gray-600 mb-1">Proposal Document</label>
                                 <input type="file" accept=".pdf,.doc,.docx"
                                     onChange={e => setFiles({ ...files, proposal_file: e.target.files[0] })}
-                                    className="w-full text-sm text-gray-600" />
+                                    className="w-full cursor-pointer rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-gray-600 file:mr-4 file:rounded-lg file:border-0 file:bg-teal-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-teal-700 hover:file:bg-teal-100" />
                             </div>
                             <div>
                                 <label className="block text-sm text-gray-600 mb-1">Documentation</label>
                                 <input type="file" accept=".pdf,.doc,.docx"
                                     onChange={e => setFiles({ ...files, documentation_file: e.target.files[0] })}
-                                    className="w-full text-sm text-gray-600" />
+                                    className="w-full cursor-pointer rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-gray-600 file:mr-4 file:rounded-lg file:border-0 file:bg-teal-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-teal-700 hover:file:bg-teal-100" />
                             </div>
                             <div>
                                 <label className="block text-sm text-gray-600 mb-1">Code / Source</label>
                                 <input type="file" accept=".pdf,.doc,.docx,.zip,.rar"
                                     onChange={e => setFiles({ ...files, code_file: e.target.files[0] })}
-                                    className="w-full text-sm text-gray-600" />
+                                    className="w-full cursor-pointer rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-gray-600 file:mr-4 file:rounded-lg file:border-0 file:bg-teal-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-teal-700 hover:file:bg-teal-100" />
                             </div>
                         </div>
 

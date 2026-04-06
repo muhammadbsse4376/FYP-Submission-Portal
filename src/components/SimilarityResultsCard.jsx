@@ -96,7 +96,7 @@ const SimilarityResultsCard = ({ similarProjects }) => {
   return (
     <div className="bg-white border rounded-lg shadow-sm">
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-4 py-3 rounded-t-lg">
+      <div className="bg-linear-to-r from-indigo-500 to-purple-500 text-white px-4 py-3 rounded-t-lg">
         <h3 className="font-semibold flex items-center gap-2">
           <Info className="w-5 h-5" />
           AI Similarity Analysis

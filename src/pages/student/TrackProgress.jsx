@@ -344,7 +344,7 @@ export default function TrackProgress() {
                                                                     type="file"
                                                                     accept=".pdf,.doc,.docx"
                                                                     onChange={(e) => setUploadFile(e.target.files[0])}
-                                                                    className="text-sm"
+                                                                    className="w-full cursor-pointer rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm text-gray-600 file:mr-4 file:rounded-lg file:border-0 file:bg-teal-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-teal-700 hover:file:bg-teal-100"
                                                                 />
                                                                 <div className="flex gap-2">
                                                                     <button

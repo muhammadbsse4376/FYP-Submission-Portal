@@ -11,7 +11,7 @@ export default function AdminDashboard() {
     const showNavbar = location.pathname === "/admin";
 
     return (
-        <div className="flex h-screen bg-slate-100">
+        <div className="min-h-screen bg-slate-100">
 
             {/* Mobile hamburger */}
             <button
@@ -27,9 +27,9 @@ export default function AdminDashboard() {
             </div>
 
             {/* Main Section */}
-            <div className="flex-1 min-w-0 flex flex-col h-screen">
+            <div className="min-h-screen flex flex-col md:ml-64">
                 {showNavbar && <AdminNavbar adminName="Admin" />}
-                <main className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden p-6">
+                <main className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden p-4 sm:p-6 lg:p-8">
                     <Outlet />
                 </main>
             </div>

@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+/* Keep semester dropdown highlight aligned with app theme (non-blue) where browser allows option styling. */
+.semester-select option {
+	background-color: #ffffff;
+	color: #374151;
+}
+
+.semester-select option:hover,
+.semester-select option:focus,
+.semester-select option:checked {
+	background-color: #ccfbf1;
+	color: #0f766e;
+}

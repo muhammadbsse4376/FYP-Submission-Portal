@@ -40,9 +40,9 @@ const Sidebar = () => {
       {/* Mobile hamburger button */}
       <button
         onClick={() => setOpen(true)}
-        className="fixed top-4 left-4 z-50 md:hidden p-2 bg-slate-800 rounded-lg shadow-md"
+        className="fixed top-4 left-4 z-50 md:hidden p-2 bg-white rounded-lg shadow-md"
       >
-        <Menu className="w-5 h-5 text-white" />
+        <Menu className="w-5 h-5 text-gray-700" />
       </button>
 
       {/* Overlay */}
@@ -52,12 +52,12 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed md:static z-50 top-0 left-0 h-screen w-64 bg-slate-800 shadow-md p-4 overflow-y-auto
+        className={`fixed md:fixed z-50 inset-y-0 left-0 h-screen w-64 bg-slate-800 shadow-md p-4 overflow-hidden
           transform transition-transform duration-300
           ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
       >
         {/* Brand */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-6 shrink-0">
           <div>
             <h1 className="text-xl font-bold text-white">FYP Portal</h1>
             <p className="text-xs text-gray-400">Student Panel</p>
