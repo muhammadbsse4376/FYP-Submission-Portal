@@ -1,0 +1,32 @@
+iiui-fyp-portal.me {
+    # Automatic HTTPS with Let's Encrypt
+    
+    # API requests -> backend
+    handle /api/* {
+        reverse_proxy backend:5000 {
+            header_up Host {host}
+            header_up X-Real-IP {remote}
+            header_up X-Forwarded-For {remote}
+            header_up X-Forwarded-Proto {scheme}
+        }
+    }
+    
+    # Everything else -> frontend
+    handle {
+        reverse_proxy frontend:80
+    }
+    
+    # Enable compression
+    encode gzip
+    
+    # Logging
+    log {
+        output file /data/access.log
+        format console
+    }
+}
+
+# Redirect www to non-www
+www.iiui-fyp-portal.me {
+    redir https://iiui-fyp-portal.me{uri} permanent
+}

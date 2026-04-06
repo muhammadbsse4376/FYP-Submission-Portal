@@ -55,3 +55,9 @@ htmlcov/
 
 # Build outputs
 build/
+
+# Docker
+.env
+
+# Production secrets (keep .env.example)
+!.env.example

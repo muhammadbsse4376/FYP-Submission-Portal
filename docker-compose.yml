@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: fyp-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-StrongPass123!}
+      MYSQL_DATABASE: fyp_portal
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./fyp_portal.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-StrongPass123!}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - fyp-network
+
+  # Flask Backend
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: fyp-backend
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=mysql+pymysql://root:${MYSQL_ROOT_PASSWORD:-StrongPass123!}@db:3306/fyp_portal
+      - SECRET_KEY=${SECRET_KEY:-your_production_secret_key_here}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-your_jwt_secret_key_here}
+      - FLASK_ENV=production
+      - MAIL_USERNAME=${MAIL_USERNAME:-}
+      - MAIL_PASSWORD=${MAIL_PASSWORD:-}
+      - MAIL_DEFAULT_SENDER=${MAIL_DEFAULT_SENDER:-}
+    volumes:
+      - backend_uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - fyp-network
+
+  # React Frontend + Nginx
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fyp-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - fyp-network
+
+volumes:
+  mysql_data:
+  backend_uploads:
+
+networks:
+  fyp-network:
+    driver: bridge

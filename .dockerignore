@@ -1,0 +1,47 @@
+# Dependencies
+node_modules
+Backend/venv
+Backend/.venv
+
+# Build outputs
+dist
+build
+
+# Git
+.git
+.gitignore
+
+# Environment files (will be passed via docker-compose)
+.env
+.env.*
+Backend/.env
+Backend/.env.*
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Logs
+*.log
+logs
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+.mypy_cache
+
+# Uploads (will be mounted as volume)
+Backend/uploads
+
+# Documentation
+README.md
+*.md
+
+# Tests
+tests
+*.test.js
+*.spec.js

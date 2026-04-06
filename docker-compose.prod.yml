@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: fyp-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: fyp_portal
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./fyp_portal.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - fyp-network
+
+  # Flask Backend
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: fyp-backend
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=mysql+pymysql://root:${MYSQL_ROOT_PASSWORD}@db:3306/fyp_portal
+      - SECRET_KEY=${SECRET_KEY}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - FLASK_ENV=production
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - MAIL_DEFAULT_SENDER=${MAIL_DEFAULT_SENDER}
+    volumes:
+      - backend_uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - fyp-network
+
+  # React Frontend + Nginx (with SSL via Caddy)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fyp-frontend
+    restart: unless-stopped
+    networks:
+      - fyp-network
+
+  # Caddy for automatic HTTPS/SSL
+  caddy:
+    image: caddy:2-alpine
+    container_name: fyp-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - frontend
+    networks:
+      - fyp-network
+
+volumes:
+  mysql_data:
+  backend_uploads:
+  caddy_data:
+  caddy_config:
+
+networks:
+  fyp-network:
+    driver: bridge

@@ -1,0 +1,31 @@
+# Virtual environment
+venv
+.venv
+env
+ENV
+
+# Environment files
+.env
+.env.*
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+.mypy_cache
+.ruff_cache
+
+# Uploads (will be mounted as volume)
+uploads/*
+!uploads/.gitkeep
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Documentation
+README.md
+*.md
