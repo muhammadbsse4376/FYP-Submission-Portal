@@ -67,7 +67,9 @@ jobs:
 
             export PROJECT_DIR="$PROJECT_DIR"
             export BRANCH=main
-            export COMPOSE_FILE="${{ secrets.VPS_COMPOSE_FILE }}"
+            COMPOSE_FILE="${{ secrets.VPS_COMPOSE_FILE }}"
+            COMPOSE_FILE="${COMPOSE_FILE:-docker-compose.yml}"
+            export COMPOSE_FILE="$COMPOSE_FILE"
             export SKIP_DB_RESTART=true
             export HEALTHCHECK_RETRIES=24
             export HEALTHCHECK_DELAY=5
