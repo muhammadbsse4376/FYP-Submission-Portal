@@ -86,6 +86,7 @@ def create_app():
     from routes.meetings import meetings_bp
     app.register_blueprint(meetings_bp, url_prefix="/api/meetings")
 
+    # AI features with lazy-loaded ML models (safe to import now)
     from routes.ai_check import ai_bp
     app.register_blueprint(ai_bp)  # URL prefix already set in blueprint
 
@@ -107,6 +108,11 @@ def create_app():
     @app.route("/health")
     def health_check():
         """Health check endpoint for Fly.io monitoring"""
+        return {"status": "healthy", "service": "FYP Portal Backend"}, 200
+
+    @app.route("/api/health")
+    def health_check_api():
+        """Compatibility health endpoint for reverse-proxy checks."""
         return {"status": "healthy", "service": "FYP Portal Backend"}, 200
 
     return app

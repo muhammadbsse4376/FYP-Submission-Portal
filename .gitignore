@@ -61,3 +61,6 @@ build/
 
 # Production secrets (keep .env.example)
 !.env.example
+
+# Local DB backup dump (sensitive data)
+local_backup.sql

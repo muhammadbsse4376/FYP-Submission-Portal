@@ -143,6 +143,46 @@ docker exec -it fyp-backend bash
 
 ---
 
+## GitHub Actions Auto-Deploy (Safe Mode)
+
+This repository includes a workflow at `.github/workflows/deploy.yml` and a server deploy script at `scripts/deploy.sh`.
+
+Behavior:
+- Runs checks on every push to `main` (frontend build + backend syntax check)
+- Deploys only if checks pass
+- Builds containers before switching services
+- Runs post-deploy health check
+- Automatically rolls back to previous commit if deploy/health fails
+
+### One-Time GitHub Setup
+
+In your GitHub repository, go to **Settings > Secrets and variables > Actions** and add:
+
+- `VPS_HOST` = your server IP/domain
+- `VPS_USER` = `root` (or your deploy user)
+- `VPS_PORT` = `22`
+- `VPS_SSH_KEY` = private key for SSH login (contents of your private key)
+
+Optional (recommended):
+- `VPS_PROJECT_DIR` = `/opt/fyp-portal`
+- `VPS_COMPOSE_FILE` = `docker-compose.yml` (or `docker-compose.prod.yml`)
+
+### One-Time Server Setup
+
+On server, ensure project exists at `/opt/fyp-portal` and is connected to GitHub origin.
+
+Also run once:
+
+```bash
+cd /opt/fyp-portal
+mkdir -p scripts
+chmod +x scripts/deploy.sh || true
+```
+
+After that, every push to `main` will trigger safe auto deployment.
+
+---
+
 ## Troubleshooting
 
 ### SSL not working?
