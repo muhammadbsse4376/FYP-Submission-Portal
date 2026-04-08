@@ -1,9 +1,12 @@
 """
 Plagiarism Detection Service
 AI-generated content detection using roberta-base-openai-detector
+
+IMPORTANT: Uses lazy imports to prevent backend startup crashes if ML libraries fail.
 """
-import torch
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+# Removed top-level imports - torch and transformers loaded on-demand
+# import torch
+# from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from utils.ml_models import ml_models
 from services.text_extractor import TextExtractor
 from models.plagiarism_report import PlagiarismReport
@@ -172,7 +175,13 @@ class PlagiarismService:
                 'human_probability': float,
                 'confidence': float
             }
+        
+        Raises:
+            RuntimeError: If ML models fail to load
         """
+        # Lazy import torch - only needed when this method is called
+        import torch
+        
         model, tokenizer = ml_models.get_ai_detector()
 
         # Tokenize

@@ -12,6 +12,9 @@ RUN npm ci
 # Copy source code
 COPY . .
 
+# Set API URL for production build (relative path, proxied by Caddy/Nginx)
+ENV VITE_API_URL=/api
+
 # Build the app
 RUN npm run build
 
