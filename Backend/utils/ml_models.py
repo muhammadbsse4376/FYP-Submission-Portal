@@ -1,10 +1,10 @@
 """
 ML Model loader and cache singleton
 Loads and caches AI/ML models to prevent repeated loading
+
+IMPORTANT: Uses lazy imports to prevent backend startup crashes if ML libraries fail.
+Libraries are only imported when models are actually needed.
 """
-from sentence_transformers import SentenceTransformer
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
-import torch
 
 
 class MLModels:
@@ -31,15 +31,25 @@ class MLModels:
 
         Returns:
             SentenceTransformer: Pre-trained sentence embedding model
+        
+        Raises:
+            RuntimeError: If libraries are not installed or model fails to load
         """
         if self._similarity_model is None:
             print("[ML Models] Loading Sentence Transformer model (all-MiniLM-L6-v2)...")
             print("[ML Models] This may take a few minutes on first run (downloading ~90MB model)...")
             try:
+                # Lazy import - only import when actually needed
+                from sentence_transformers import SentenceTransformer
+                
                 # Downloads model on first run (~90MB)
                 # Subsequent calls load from cache ~/.cache/huggingface/
                 self._similarity_model = SentenceTransformer('all-MiniLM-L6-v2')
                 print("[ML Models] Similarity model loaded successfully!")
+            except ImportError as e:
+                error_msg = f"ML libraries not installed: {e}. Install with: pip install sentence-transformers"
+                print(f"[ML Models] ERROR: {error_msg}")
+                raise RuntimeError(error_msg)
             except Exception as e:
                 print(f"[ML Models] ERROR loading similarity model: {type(e).__name__}: {e}")
                 import traceback
@@ -55,10 +65,16 @@ class MLModels:
 
         Returns:
             tuple: (model, tokenizer)
+        
+        Raises:
+            RuntimeError: If libraries are not installed or model fails to load
         """
         if self._ai_detector_model is None or self._ai_detector_tokenizer is None:
             print("[ML Models] Loading AI content detector model (roberta-base-openai-detector)...")
             try:
+                # Lazy import - only import when actually needed
+                from transformers import AutoTokenizer, AutoModelForSequenceClassification
+                
                 model_name = "roberta-base-openai-detector"
 
                 # Load tokenizer
@@ -71,9 +87,13 @@ class MLModels:
                 self._ai_detector_model.eval()
 
                 print("[ML Models] ✓ AI detector loaded successfully")
+            except ImportError as e:
+                error_msg = f"ML libraries not installed: {e}. Install with: pip install transformers torch"
+                print(f"[ML Models] ERROR: {error_msg}")
+                raise RuntimeError(error_msg)
             except Exception as e:
                 print(f"[ML Models] ✗ Error loading AI detector: {e}")
-                raise
+                raise RuntimeError(f"Failed to load AI detector: {e}")
 
         return self._ai_detector_model, self._ai_detector_tokenizer
 
@@ -93,11 +113,19 @@ class MLModels:
         Returns:
             dict: Model status information
         """
+        try:
+            import torch
+            torch_version = torch.__version__
+            cuda_available = torch.cuda.is_available()
+        except ImportError:
+            torch_version = "Not installed"
+            cuda_available = False
+            
         return {
             'similarity_model_loaded': self._similarity_model is not None,
             'ai_detector_loaded': self._ai_detector_model is not None,
-            'torch_version': torch.__version__,
-            'cuda_available': torch.cuda.is_available()
+            'torch_version': torch_version,
+            'cuda_available': cuda_available
         }
 
 

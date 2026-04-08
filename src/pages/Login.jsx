@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import API from "../utils/api";
 import Logo from "../assets/iiui-logo.png";
 
 function decodeJwt(token) {
@@ -39,7 +39,7 @@ const Login = () => {
 
         setLoading(true);
         try {
-            const res = await axios.post("http://localhost:5000/api/auth/login", {
+            const res = await API.post("/auth/login", {
                 email,
                 password,
                 role,

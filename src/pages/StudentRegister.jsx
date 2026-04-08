@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import API from "../utils/api";
 import Logo from "../assets/iiui-logo.png";
 
 const semesters = ["7th", "8th"];
@@ -40,7 +40,7 @@ export default function StudentRegister() {
 
         setLoading(true);
         try {
-            await axios.post("http://localhost:5000/api/auth/register-student", {
+            await API.post("/auth/register-student", {
                 name: form.name,
                 registration_number: form.registration_number,
                 semester: form.semester,
