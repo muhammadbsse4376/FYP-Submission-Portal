@@ -6,6 +6,9 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 concurrency:
   group: production-deploy
   cancel-in-progress: true
@@ -17,12 +20,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
           cache-dependency-path: package-lock.json
 
@@ -33,7 +36,7 @@ jobs:
         run: npm run build
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
@@ -68,7 +71,7 @@ jobs:
             export PROJECT_DIR="$PROJECT_DIR"
             export BRANCH=main
             COMPOSE_FILE="${{ secrets.VPS_COMPOSE_FILE }}"
-            COMPOSE_FILE="${COMPOSE_FILE:-docker-compose.yml}"
+            COMPOSE_FILE="${COMPOSE_FILE:-docker-compose.prod.yml}"
             export COMPOSE_FILE="$COMPOSE_FILE"
             export SKIP_DB_RESTART=true
             export HEALTHCHECK_RETRIES=24
