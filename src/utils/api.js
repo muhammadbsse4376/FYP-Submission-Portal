@@ -1,7 +1,20 @@
 import axios from "axios";
 
+const rawApiUrl = (import.meta.env.VITE_API_URL || "").trim();
+const isLocalBrowser =
+  typeof window !== "undefined" &&
+  ["localhost", "127.0.0.1"].includes(window.location.hostname);
+
+// Never use a localhost API base on non-local deployments.
+const baseURL =
+  rawApiUrl && !rawApiUrl.match(/localhost|127\.0\.0\.1/i)
+    ? rawApiUrl
+    : rawApiUrl && isLocalBrowser
+      ? rawApiUrl
+      : "/api";
+
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "/api",
+  baseURL,
 });
 
 // Attach JWT token to every request

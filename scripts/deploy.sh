@@ -7,6 +7,45 @@ COMPOSE_FILE="${COMPOSE_FILE:-docker-compose.yml}"
 SKIP_DB_RESTART="${SKIP_DB_RESTART:-true}"
 HEALTHCHECK_RETRIES="${HEALTHCHECK_RETRIES:-24}"
 HEALTHCHECK_DELAY="${HEALTHCHECK_DELAY:-5}"
+PROJECT_SLUG="$(basename "${PROJECT_DIR}" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9_-')"
+CURRENT_COMPOSE_PROJECT="${COMPOSE_PROJECT_NAME:-${PROJECT_SLUG}}"
+
+service_container_name() {
+  local service_name="$1"
+  case "${service_name}" in
+    db) echo "fyp-mysql" ;;
+    backend) echo "fyp-backend" ;;
+    frontend) echo "fyp-frontend" ;;
+    caddy) echo "fyp-caddy" ;;
+    *) echo "" ;;
+  esac
+}
+
+ensure_service_container_name_available() {
+  local service_name="$1"
+  local container_name
+  container_name="$(service_container_name "${service_name}")"
+
+  if [[ -z "${container_name}" ]]; then
+    return
+  fi
+
+  if ! docker ps -a --format '{{.Names}}' | grep -qx "${container_name}"; then
+    return
+  fi
+
+  local project_label
+  local service_label
+  project_label="$(docker inspect -f '{{ index .Config.Labels "com.docker.compose.project" }}' "${container_name}" 2>/dev/null || true)"
+  service_label="$(docker inspect -f '{{ index .Config.Labels "com.docker.compose.service" }}' "${container_name}" 2>/dev/null || true)"
+
+  if [[ "${project_label}" == "${CURRENT_COMPOSE_PROJECT}" && "${service_label}" == "${service_name}" ]]; then
+    return
+  fi
+
+  echo "[deploy] Removing conflicting container ${container_name} (labels: project='${project_label:-none}', service='${service_label:-none}')"
+  docker rm -f "${container_name}" >/dev/null || true
+}
 
 compose_has_service() {
   local service_name="$1"
@@ -51,6 +90,11 @@ start_services() {
     echo "[deploy] No runnable services found"
     exit 1
   fi
+
+  local service
+  for service in "${services[@]}"; do
+    ensure_service_container_name_available "${service}"
+  done
 
   docker compose -f "${COMPOSE_FILE}" up -d "${services[@]}"
 }
